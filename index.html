@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zack's Trash Bin Cleaning | Lynchburg, VA</title>
+<meta name="description" content="Zack's Trash Bin Cleaning provides convenient, affordable trash bin cleaning in Lynchburg, Virginia.">
+<style>
+:root {
+  --blue:#075bd8;
+  --dark:#071a3a;
+  --green:#55b900;
+  --light:#f5f9ff;
+  --text:#172033;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--text); background:white; }
+header { position:sticky; top:0; z-index:10; background:rgba(255,255,255,.96); border-bottom:1px solid #e6edf7; backdrop-filter:blur(8px); }
+.nav { max-width:1100px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:12px 20px; }
+.nav img { width:170px; height:auto; }
+.nav a { text-decoration:none; color:var(--dark); font-weight:700; margin-left:18px; }
+.btn { display:inline-block; background:var(--blue); color:white !important; padding:13px 20px; border-radius:10px; text-decoration:none; font-weight:800; border:0; cursor:pointer; }
+.hero { background:linear-gradient(180deg,#f8fbff 0%,#eef7ff 100%); padding:55px 20px 70px; }
+.hero-inner { max-width:1100px; margin:auto; display:grid; grid-template-columns:1.05fr .95fr; gap:35px; align-items:center; }
+.hero h1 { font-size:clamp(40px,6vw,68px); line-height:.98; margin:0 0 18px; color:var(--dark); }
+.hero h1 span { color:var(--blue); }
+.hero p { font-size:20px; line-height:1.55; max-width:620px; }
+.hero img { width:100%; max-width:520px; display:block; margin:auto; }
+.badge { display:inline-block; background:#e5f7d7; color:#277000; padding:8px 12px; border-radius:999px; font-weight:800; margin-bottom:14px; }
+section { padding:70px 20px; }
+.container { max-width:1100px; margin:auto; }
+.section-title { text-align:center; margin:0 0 35px; color:var(--dark); font-size:38px; }
+.cards { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.card { border:1px solid #dce7f5; border-radius:18px; padding:25px; text-align:center; box-shadow:0 8px 25px rgba(20,55,100,.07); background:white; }
+.card h3 { margin:8px 0; font-size:22px; }
+.price { font-size:40px; font-weight:900; color:var(--blue); }
+.card p { margin:7px 0 0; color:#58657a; }
+.monthly { background:var(--dark); color:white; }
+.monthly .section-title { color:white; }
+.monthly .card { background:#10264d; border-color:#234574; color:white; }
+.monthly .card p { color:#d6e2f5; }
+.monthly .price { color:#7be31c; }
+.features { background:var(--light); }
+.feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.feature { background:white; padding:28px; border-radius:18px; border:1px solid #dce7f5; }
+.feature strong { display:block; font-size:21px; color:var(--dark); margin-bottom:8px; }
+.feature span { color:#59667a; line-height:1.5; }
+.booking { background:#eef7ff; }
+.form { max-width:700px; margin:auto; background:white; padding:28px; border-radius:20px; box-shadow:0 10px 35px rgba(20,55,100,.09); }
+label { display:block; font-weight:800; margin:15px 0 7px; }
+input, select, textarea { width:100%; padding:13px; border:1px solid #cbd8e8; border-radius:10px; font-size:16px; }
+textarea { min-height:110px; resize:vertical; }
+.form button { width:100%; margin-top:18px; font-size:17px; }
+.note { text-align:center; color:#617087; margin-top:14px; font-size:14px; }
+footer { background:#06152f; color:white; text-align:center; padding:35px 20px; }
+footer img { width:190px; max-width:80%; margin-bottom:12px; }
+@media(max-width:800px) {
+  .hero-inner { grid-template-columns:1fr; text-align:center; }
+  .hero p { margin-left:auto; margin-right:auto; }
+  .hero img { max-width:430px; }
+  .cards { grid-template-columns:repeat(2,1fr); }
+  .feature-grid { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+}
+@media(max-width:480px) {
+  .cards { grid-template-columns:1fr; }
+  .nav img { width:145px; }
+  .hero { padding-top:35px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <nav class="nav">
+    <a href="#top"><img src="logo.jpg" alt="Zack's Trash Bin Cleaning logo"></a>
+    <div class="nav-links">
+      <a href="#pricing">Pricing</a>
+      <a href="#monthly">Monthly</a>
+      <a href="#book" class="btn">Book a Cleaning</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="badge">Serving Lynchburg, Virginia</div>
+      <h1>Clean Bins.<br><span>Fresh Home.</span></h1>
+      <p>We clean and sanitize your trash bins so you don't have to deal with the buildup, grime, and smell.</p>
+      <a href="#book" class="btn">Book a Cleaning</a>
+    </div>
+    <div><img src="logo.jpg" alt="Zack's Trash Bin Cleaning"></div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+    <h2 class="section-title">One-Time Cleaning</h2>
+    <div class="cards">
+      <div class="card"><div class="price">$20</div><h3>1 Bin</h3><p>One-time cleaning</p></div>
+      <div class="card"><div class="price">$35</div><h3>2 Bins</h3><p>One-time cleaning</p></div>
+      <div class="card"><div class="price">$50</div><h3>3 Bins</h3><p>One-time cleaning</p></div>
+      <div class="card"><div class="price">$65</div><h3>4 Bins</h3><p>One-time cleaning</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="monthly" class="monthly">
+  <div class="container">
+    <h2 class="section-title">Monthly Service</h2>
+    <div class="cards">
+      <div class="card"><div class="price">$35</div><h3>1 Bin</h3><p>2 cleanings per month</p><p><b>Save $5</b></p></div>
+      <div class="card"><div class="price">$65</div><h3>2 Bins</h3><p>2 cleanings per month</p><p><b>Save $5</b></p></div>
+      <div class="card"><div class="price">$95</div><h3>3 Bins</h3><p>2 cleanings per month</p><p><b>Save $5</b></p></div>
+      <div class="card"><div class="price">$125</div><h3>4 Bins</h3><p>2 cleanings per month</p><p><b>Save $5</b></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2 class="section-title">Why Clean Your Bins?</h2>
+    <div class="feature-grid">
+      <div class="feature"><strong>🧼 Cleaner Bins</strong><span>Remove built-up grime and residue from the inside and outside of your trash bins.</span></div>
+      <div class="feature"><strong>🌿 Fresher Smell</strong><span>Regular cleaning helps keep unpleasant trash-bin odors under control.</span></div>
+      <div class="feature"><strong>⏱️ Convenient</strong><span>Let us handle the dirty work while you get back to your day.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="booking">
+  <div class="container">
+    <h2 class="section-title">Book a Cleaning</h2>
+    <form class="form" action="mailto:zangrisanio@gmail.com" method="post" enctype="text/plain">
+      <label for="name">Name</label>
+      <input id="name" name="Name" required placeholder="Your name">
+
+      <label for="phone">Phone Number</label>
+      <input id="phone" name="Phone" type="tel" placeholder="Your phone number">
+
+      <label for="address">Service Address</label>
+      <input id="address" name="Address" required placeholder="Street address, Lynchburg, VA">
+
+      <label for="bins">Number of Bins</label>
+      <select id="bins" name="Bins">
+        <option>1 bin</option><option>2 bins</option><option>3 bins</option><option>4 bins</option>
+      </select>
+
+      <label for="service">Service Type</label>
+      <select id="service" name="Service">
+        <option>One-time cleaning</option>
+        <option>Monthly service (2 cleanings/month)</option>
+      </select>
+
+      <label for="date">Preferred Date / Time</label>
+      <input id="date" name="Preferred date and time" placeholder="Example: Saturday morning">
+
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="Notes" placeholder="Anything we should know?"></textarea>
+
+      <button class="btn" type="submit">Send Booking Request</button>
+      <div class="note">Your request will open an email addressed to zangrisanio@gmail.com.</div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <img src="logo.jpg" alt="Zack's Trash Bin Cleaning">
+  <div>Trash Bin Cleaning • Lynchburg, VA</div>
+  <div style="margin-top:8px;">zangrisanio@gmail.com</div>
+</footer>
+</body>
+</html>
