@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trash Bin Cleaning CRM</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f6f8;color:#17202a}
+header{background:#17202a;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+h1{font-size:21px;margin:0}.wrap{max-width:1050px;margin:auto;padding:18px}
+button{border:0;border-radius:10px;padding:11px 14px;font-weight:700;cursor:pointer;background:#2563eb;color:white}
+button.secondary{background:#e8edf2;color:#17202a}.danger{background:#dc2626}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.card{background:white;border-radius:14px;padding:16px;box-shadow:0 2px 10px #0000000d}.stat b{font-size:28px;display:block;margin-top:5px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}input,select{width:100%;padding:12px;border:1px solid #ccd3da;border-radius:9px;font-size:15px;background:white}
+.search{flex:1;min-width:220px}.customer{margin-bottom:12px}.row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.muted{color:#66727e;font-size:13px}.pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#e8f0ff;color:#2456a6;font-size:12px;font-weight:700;margin-top:6px}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.actions button{padding:8px 10px;font-size:13px}
+.empty{text-align:center;padding:35px;color:#66727e}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:15px;z-index:10}.modal.open{display:flex}.modalbox{background:white;border-radius:16px;padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.full{grid-column:auto}header{position:static}.row{flex-direction:column}}
+</style>
+</head>
+<body>
+<header><h1>🗑️ Trash Bin Cleaning CRM</h1><button id="notifyBtn" class="secondary">Enable reminders</button></header>
+<div class="wrap">
+<div class="stats">
+<div class="card stat">Upcoming<b id="upcoming">0</b></div>
+<div class="card stat">Customers<b id="customers">0</b></div>
+<div class="card stat">Scheduled value<b id="revenue">$0</b></div>
+</div>
+<div class="toolbar">
+<input id="search" class="search" placeholder="Search name, phone, or address…">
+<button onclick="openForm()">+ Add customer</button>
+</div>
+<div id="list"></div>
+</div>
+
+<div id="modal" class="modal"><div class="modalbox">
+<h2 id="modalTitle">Add customer</h2>
+<form id="form">
+<input type="hidden" id="id">
+<div class="grid">
+<div><label>Name</label><input id="name" required></div>
+<div><label>Phone</label><input id="phone" type="tel"></div>
+<div class="full"><label>Address</label><input id="address" required></div>
+<div><label>Bins</label><select id="bins"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+<div><label>Indoor add-on</label><select id="indoor"><option value="0">No</option><option value="5">Yes (+$5)</option></select></div>
+<div><label>Date</label><input id="date" type="date" required></div>
+<div><label>Time</label><input id="time" type="time" required></div>
+<div class="full"><label>Notes</label><input id="notes" placeholder="Gate code, special instructions, etc."></div>
+</div>
+<div class="form-actions"><button type="button" class="secondary" onclick="closeForm()">Cancel</button><button>Save customer</button></div>
+</form></div></div>
+
+<script>
+const KEY="trashBinCRM_v1";
+let data=JSON.parse(localStorage.getItem(KEY)||"[]");
+const prices={1:20,2:35,3:50,4:65};
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function money(n){return "$"+Number(n).toFixed(0)}
+function price(c){return prices[c.bins]+Number(c.indoor||0)}
+function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function render(){
+ const q=$("search").value.toLowerCase();
+ let filtered=data.filter(c=>(c.name+" "+c.phone+" "+c.address).toLowerCase().includes(q))
+ .sort((a,b)=>(a.date+"T"+a.time).localeCompare(b.date+"T"+b.time));
+ const now=new Date(); let upcoming=data.filter(c=>new Date(c.date+"T"+c.time)>=now);
+ $("upcoming").textContent=upcoming.length;$("customers").textContent=data.length;
+ $("revenue").textContent=money(upcoming.reduce((s,c)=>s+price(c),0));
+ if(!filtered.length){$("list").innerHTML='<div class="card empty">No customers yet. Tap <b>+ Add customer</b> to add your first one.</div>';return}
+ $("list").innerHTML=filtered.map(c=>{
+   let d=new Date(c.date+"T"+c.time);
+   let when=d.toLocaleString([], {weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+   let past=d<now;
+   return `<div class="card customer"><div class="row"><div><b>${esc(c.name)}</b><div class="muted">${esc(c.phone)}</div><div>${esc(c.address)}</div><span class="pill">${past?"Completed/overdue":"Scheduled"} · ${when}</span></div><b>${money(price(c))}</b></div>
+   <div class="muted" style="margin-top:9px">${c.bins} bin${c.bins==1?"":"s"}${c.indoor?" + indoor bin":""}${c.notes?" · "+esc(c.notes):""}</div>
+   <div class="actions"><button onclick="edit('${c.id}')">Edit</button><button class="secondary" onclick="complete('${c.id}')">Mark complete</button><button class="danger" onclick="removeCustomer('${c.id}')">Delete</button></div></div>`;
+ }).join("");
+}
+function openForm(c=null){
+ $("modal").classList.add("open");$("modalTitle").textContent=c?"Edit customer":"Add customer";
+ $("id").value=c?.id||"";$("name").value=c?.name||"";$("phone").value=c?.phone||"";$("address").value=c?.address||"";
+ $("bins").value=c?.bins||1;$("indoor").value=c?.indoor||0;$("date").value=c?.date||new Date().toISOString().slice(0,10);
+ $("time").value=c?.time||"09:00";$("notes").value=c?.notes||"";
+}
+function closeForm(){$("modal").classList.remove("open")}
+function edit(id){openForm(data.find(c=>c.id===id))}
+$("form").onsubmit=e=>{e.preventDefault();let id=$("id").value||crypto.randomUUID();let c={id,name:$("name").value,phone:$("phone").value,address:$("address").value,bins:Number($("bins").value),indoor:Number($("indoor").value),date:$("date").value,time:$("time").value,notes:$("notes").value};let i=data.findIndex(x=>x.id===id);if(i>=0)data[i]=c;else data.push(c);save();closeForm()}
+function complete(id){let c=data.find(x=>x.id===id);if(!c)return;c.date=new Date().toISOString().slice(0,10);c.time="00:00";c.notes=(c.notes?c.notes+" · ":"")+"Completed";save()}
+function removeCustomer(id){if(confirm("Delete this customer?")){data=data.filter(c=>c.id!==id);save()}}
+$("search").oninput=render;
+$("notifyBtn").onclick=async()=>{if(!("Notification" in window)){alert("Your browser does not support notifications here.");return}let p=await Notification.requestPermission();if(p==="granted"){new Notification("Trash Bin CRM",{body:"Reminders are enabled while this app is open."});alert("Reminders enabled. For true background reminders when the app is closed, this app will need to be hosted as a secure web app/PWA.")}else alert("Notifications were not allowed.")};
+render();
+</script>
+</body></html>
